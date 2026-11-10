@@ -38,10 +38,14 @@ docker compose -f compose.ci.yaml down
 
 เปิด repository → Actions → Mini-ERP CI → เลือกรอบล่าสุด สีเขียวแปลว่าชุดตรวจผ่าน สีแดงให้เปิดขั้นที่ล้มเหลวเพื่ออ่าน log และดาวน์โหลด test-reports ที่ส่วน Artifacts ด้านล่าง เปิด `playwright-report/index.html` เพื่อดูรายละเอียด browser tests
 
-การตั้งให้ห้าม merge เมื่อ CI ไม่ผ่านเป็น branch protection ของ repository แยกจาก workflow นี้ ยังไม่ได้ตั้งเพราะยังไม่มี repository ปลายทาง และยังไม่มี ESLint ในโปรเจกต์: TypeScript check ไม่ใช่ lint
+การตั้งให้ห้าม merge เมื่อ CI ไม่ผ่านเป็น branch protection ของ repository แยกจาก workflow นี้ ยังไม่ได้ตั้ง และยังไม่มี ESLint ในโปรเจกต์: TypeScript check ไม่ใช่ lint
 
 ## สถานะการเปิดใช้งาน
 
 ผลตรวจบนเครื่องวันที่ 10 พ.ย. 2026: actionlint ผ่าน; Linux Docker รัน `ci:check` จาก dependencies ที่ติดตั้งใหม่ ผ่าน TypeScript, Vitest 45 tests, production build และ Playwright 23 tests รวม migration และบันทึก/อ่านวันทบทวนกับ PostgreSQL จริง คำสั่งคืน exit code 0 รายงานเก็บใน `test-results/ci-linux/` (ไม่เข้า Git)
 
-เตรียมไฟล์ workflow แล้ว แต่โฟลเดอร์นี้ยังไม่เป็น Git repository และยังไม่ได้ระบุ GitHub repository จึงยังไม่มีผลรันจาก GitHub Actions การเปิดใช้งานจริงต้องนำโปรเจกต์และ workflow ขึ้น repository ที่ผู้ใช้เลือกก่อน
+สร้าง [Brownstone42/mini-erp2](https://github.com/Brownstone42/mini-erp2) แบบ **public** ตามคำขอผู้ใช้แล้ว ใช้ branch `main` และ remote `origin` ชี้ไป repository นี้ การ push เริ่ม [CI ครั้งแรก](https://github.com/Brownstone42/mini-erp2/actions/runs/42820067852) โดยอัตโนมัติ
+
+ผล CI จริงวันที่ 10 พ.ย. 2026 ของ commit `30dd528`: ทุกขั้นผ่าน รวม TypeScript, tests, production build และการอัปโหลด test reports สามารถเปิด run ด้านบนเพื่อตรวจ log และดาวน์โหลด artifact ได้
+
+Git เก็บเวอร์ชันบนเครื่อง ส่วน GitHub เก็บเวอร์ชันที่ส่งขึ้นไป: หลังแก้ไฟล์ ให้ตรวจ `git diff` แล้วเลือกไฟล์ด้วย `git add <ไฟล์>` บันทึกด้วย `git commit -m "คำอธิบาย"` และส่งด้วย `git push` จากนั้นดูผลในแท็บ Actions ไฟล์ `.env`, ฐานข้อมูล local, dependencies และรายงานทดสอบไม่ถูกส่งขึ้น GitHub ตาม `.gitignore`

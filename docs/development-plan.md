@@ -1,6 +1,6 @@
 # Mini-ERP V2 แผนพัฒนาด้วย Next.js
 
-อัปเดตหลัง R2: ผู้ใช้ตรวจรับหน้าจอแล้ว ติดตั้ง WSL/Docker สำเร็จ และทำขั้น 6 ด้วยชุด Docker แยกฐานเดิมแล้ว ตรวจ build, migration, health และบันทึกวันหลัง down/up ผ่าน ดู [คู่มือและผลตรวจ Docker](docker-local.md) ขั้น 7 เตรียม workflow ตรวจ TypeScript, logic tests, production build และ browser tests กับ PostgreSQL ชั่วคราวแล้ว ดู [คู่มือ CI](ci.md) ยังต้องระบุ GitHub repository เพื่อเปิดใช้งานจริง ส่วน lint ยังไม่ได้เพิ่ม ยังไม่ deploy หรือเชื่อม DBF
+อัปเดตหลัง R2: ผู้ใช้ตรวจรับหน้าจอแล้ว ติดตั้ง WSL/Docker สำเร็จ และทำขั้น 6 ด้วยชุด Docker แยกฐานเดิมแล้ว ตรวจ build, migration, health และบันทึกวันหลัง down/up ผ่าน ดู [คู่มือและผลตรวจ Docker](docker-local.md) ขั้น 7 เชื่อม GitHub repository แบบ public และเปิดใช้ workflow ตรวจ TypeScript, logic tests, production build และ browser tests กับ PostgreSQL ชั่วคราวแล้ว ดู [คู่มือ CI](ci.md) ส่วน lint ยังไม่ได้เพิ่ม ยังไม่ deploy หรือเชื่อม DBF
 
 สถานะล่าสุด: ผู้ใช้ยืนยัน R2 และให้ทำ AT ทุกเคสแล้ว หน้าหลักยอดสั่งรายเดือน ค้างส่งรวมไม่จำกัดเวลา และหน้ารายละเอียดทำงานด้วยข้อมูลสมมติ มีหลักฐาน AT-R2-01 ถึง AT-R2-20 ใน [ผลตรวจ R2](r2-validation.md) PostgreSQL ยังรันแบบ local เป็นทางสำรอง ไม่ได้ตรวจ Docker
 

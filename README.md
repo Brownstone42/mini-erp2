@@ -2,7 +2,7 @@
 
 ## CI
 
-เตรียม GitHub Actions สำหรับตรวจ TypeScript, Vitest, production build และ Playwright กับ PostgreSQL ชั่วคราวแล้ว ดู [คู่มือ CI](docs/ci.md) ทดลองกระบวนการบน Linux ได้ด้วย `docker compose -f compose.ci.yaml up --build --abort-on-container-exit --exit-code-from checks` ยังไม่ deploy หรือเชื่อม DBF และยังต้องระบุ GitHub repository ก่อนเปิดใช้งานจริง
+เชื่อม [GitHub repository แบบ public](https://github.com/Brownstone42/mini-erp2) แล้ว ทุก push และ pull request จะตรวจ TypeScript, Vitest, production build และ Playwright กับ PostgreSQL ชั่วคราว ดู [ผล CI ล่าสุด](https://github.com/Brownstone42/mini-erp2/actions/workflows/ci.yml) และ [คู่มือ CI](docs/ci.md) ทดลองกระบวนการบน Linux ได้ด้วย `docker compose -f compose.ci.yaml up --build --abort-on-container-exit --exit-code-from checks` ยังไม่ deploy หรือเชื่อม DBF
 
 ## เปิดชุด Docker แยกจากฐานเดิม
 
