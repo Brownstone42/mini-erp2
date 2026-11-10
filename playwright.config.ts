@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 import { testDatabaseUrl } from "./tests/support/database";
+import { testStagingCredentials } from "./tests/support/staging-auth";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -11,6 +12,7 @@ export default defineConfig({
     ? [["list"], ["html", { open: "never" }], ["junit", { outputFile: "reports/e2e.xml" }]]
     : "list",
   use: {
+    httpCredentials: testStagingCredentials,
     baseURL: "http://127.0.0.1:3100",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
@@ -20,9 +22,13 @@ export default defineConfig({
     command: process.env.CI
       ? "npm run db:test:prepare && npm run start -- --port 3100"
       : "npm run db:test:prepare && npm run dev -- --port 3100",
-    url: "http://127.0.0.1:3100",
+    url: "http://127.0.0.1:3100/api/health",
     reuseExistingServer: false,
     timeout: 120_000,
-    env: { NEXT_TELEMETRY_DISABLED: "1", E2E_TEST: "1", DATABASE_URL: testDatabaseUrl },
+    env: {
+      NEXT_TELEMETRY_DISABLED: "1", E2E_TEST: "1", DATABASE_URL: testDatabaseUrl,
+      STAGING_AUTH_MODE: "on", STAGING_AUTH_USER: testStagingCredentials.username,
+      STAGING_AUTH_PASSWORD: testStagingCredentials.password,
+    },
   },
 });

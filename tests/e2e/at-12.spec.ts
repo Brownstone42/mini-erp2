@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { withTestDatabase } from "../support/database";
+import { testStagingCredentials } from "../support/staging-auth";
 
 async function clearTestSchedule() {
   await withTestDatabase((pool) => pool.query(
@@ -26,7 +27,7 @@ test("AT-R2-14: บันทึก 20 พ.ย. 2026 แล้วเปิด bro
   expect(saved.rows).toEqual([{ date: "2026-11-20" }]);
 
   // Context ใหม่ไม่มี cookie/localStorage เดิม จึงต้องอ่านค่าที่บันทึกบน server
-  const newContext = await browser.newContext();
+  const newContext = await browser.newContext({ httpCredentials: testStagingCredentials });
   try {
     const reopened = await newContext.newPage();
     await reopened.goto("http://127.0.0.1:3100/");

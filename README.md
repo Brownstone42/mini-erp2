@@ -1,5 +1,9 @@
 # Mini-ERP V2
 
+## Staging access
+
+เพิ่มรหัสผ่านสำหรับ staging แล้ว ดู [การตั้งค่า Render และแผนซ้อม rollback](docs/staging-access.md) ต้องตั้งค่าลับและ deploy รุ่นที่มีการป้องกันก่อนจึงจะมีผลจริง ใช้เฉพาะข้อมูลสมมติ ยังไม่เชื่อม DBF
+
 ## CI
 
 เชื่อม [GitHub repository แบบ public](https://github.com/Brownstone42/mini-erp2) แล้ว ทุก push และ pull request จะตรวจ TypeScript, Vitest, production build และ Playwright กับ PostgreSQL ชั่วคราว ดู [ผล CI ล่าสุด](https://github.com/Brownstone42/mini-erp2/actions/workflows/ci.yml) และ [คู่มือ CI](docs/ci.md) ทดลองกระบวนการบน Linux ได้ด้วย `docker compose -f compose.ci.yaml up --build --abort-on-container-exit --exit-code-from checks` ยังไม่ deploy หรือเชื่อม DBF

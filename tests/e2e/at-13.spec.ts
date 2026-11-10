@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { withTestDatabase } from "../support/database";
+import { testStagingCredentials } from "../support/staging-auth";
 
 test.beforeEach(async () => {
   // เตรียมวันเดิมในฐานทดสอบเท่านั้น ไม่ขึ้นกับการรัน AT-12 มาก่อน
@@ -35,7 +36,7 @@ test("AT-R2-15: เปลี่ยนวันทบทวน 20 เป็น 25
   ));
   expect(saved.rows).toEqual([{ date: "2026-11-25" }]);
 
-  const newContext = await browser.newContext();
+  const newContext = await browser.newContext({ httpCredentials: testStagingCredentials });
   try {
     const reopened = await newContext.newPage();
     await reopened.goto("http://127.0.0.1:3100/");

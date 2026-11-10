@@ -29,6 +29,8 @@ services:
       context: .
       target: runtime
     environment:
+      # Localhost-only demo. Render always requires authentication.
+      STAGING_AUTH_MODE: "off"
       DATABASE_URL: postgresql://mini_erp_docker:${DOCKER_DB_PASSWORD:-docker_local_only}@db:5432/mini_erp_docker
     ports:
       - "127.0.0.1:3300:3000"
