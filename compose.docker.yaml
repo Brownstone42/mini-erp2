@@ -1,0 +1,48 @@
+name: mini-erp2-demo
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_USER: mini_erp_docker
+      POSTGRES_PASSWORD: ${DOCKER_DB_PASSWORD:-docker_local_only}
+      POSTGRES_DB: mini_erp_docker
+    volumes:
+      - review_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mini_erp_docker -d mini_erp_docker"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+  migrate:
+    build:
+      context: .
+      target: migration
+    environment:
+      DATABASE_URL: postgresql://mini_erp_docker:${DOCKER_DB_PASSWORD:-docker_local_only}@db:5432/mini_erp_docker
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+  app:
+    build:
+      context: .
+      target: runtime
+    environment:
+      DATABASE_URL: postgresql://mini_erp_docker:${DOCKER_DB_PASSWORD:-docker_local_only}@db:5432/mini_erp_docker
+    ports:
+      - "127.0.0.1:3300:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 8s
+      start_period: 15s
+      retries: 12
+    restart: unless-stopped
+volumes:
+  review_data:

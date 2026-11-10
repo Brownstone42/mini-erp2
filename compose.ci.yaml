@@ -1,0 +1,27 @@
+name: mini-erp2-ci
+services:
+  db:
+    image: postgres:17-bookworm
+    command: ["postgres", "-p", "55433"]
+    environment:
+      POSTGRES_USER: mini_erp
+      POSTGRES_PASSWORD: local_test_only
+      POSTGRES_DB: mini_erp_test
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mini_erp -d mini_erp_test -p 55433"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  checks:
+    build:
+      context: .
+      target: ci
+    network_mode: service:db
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://mini_erp:local_test_only@127.0.0.1:55433/mini_erp_test
+    shm_size: 1gb

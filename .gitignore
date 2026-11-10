@@ -1,0 +1,15 @@
+node_modules/
+coverage/
+.vitest/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.next/
+.next-e2e/
+.next-build/
+playwright-report/
+test-results/
+src/generated/prisma/
+.local-postgres/
+reports/
