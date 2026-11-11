@@ -14,3 +14,4 @@ src/generated/prisma/
 .local-postgres/
 reports/
 secret/
+.backups/

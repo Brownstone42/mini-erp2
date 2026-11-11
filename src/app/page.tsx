@@ -22,7 +22,7 @@ export default async function ReplenishmentPage({ searchParams }: {
     <main>
       <p className="eyebrow">MINI-ERP V2 · MANAGER</p>
       <h1>ทบทวนการเติมสต็อก</h1>
-      <p className="demo">ข้อมูลสมมติสำหรับฝึกใช้งาน · รุ่นทดลอง B</p>
+      <p className="demo">ข้อมูลสมมติสำหรับฝึกใช้งาน</p>
       <section aria-labelledby="product-heading">
         <h2 id="product-heading">{demoProduct.name}</h2>
         <p>{demoProduct.sku}</p>

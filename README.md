@@ -2,7 +2,11 @@
 
 ## Staging access
 
-เพิ่มรหัสผ่านสำหรับ staging แล้ว ดู [การตั้งค่า Render และแผนซ้อม rollback](docs/staging-access.md) ต้องตั้งค่าลับและ deploy รุ่นที่มีการป้องกันก่อนจึงจะมีผลจริง ใช้เฉพาะข้อมูลสมมติ ยังไม่เชื่อม DBF
+เปิด staging บน Render พร้อมรหัสผ่านแล้ว ซ้อม deploy/rollback ระหว่างรุ่นที่มีการป้องกันผ่าน โดยวันทบทวน 26 พ.ย. 2026 ยังอยู่ ดู [หลักฐานและคู่มือ staging](docs/staging-access.md) ใช้เฉพาะข้อมูลสมมติ ยังไม่เชื่อม DBF
+
+สำรองฐาน staging จริงและกู้ลง PostgreSQL แยกใน Docker ผ่านแล้ว ข้อมูลวันทบทวนและประวัติ migration ตรงกัน ดู [คู่มือและผล backup/restore](docs/backup-restore.md) ไฟล์สำรองกับโฟลเดอร์ secret ไม่เข้า Git หรือ Docker build
+
+รุ่นหลังซ้อมนำข้อความ “รุ่นทดลอง B” ออกแล้ว ขั้นถัดไปคือให้ CI ผ่านและผู้ใช้ deploy commit นี้ด้วยตนเองบน Render เพื่อให้ตรงกับ GitHub ไม่ต้องรัน migration เพิ่มหรือแก้ Environment Variables และคง Auto-Deploy เป็น Off
 
 ## CI
 
@@ -22,7 +26,7 @@
 
 รัน `npm run test:r2` เพื่อตรวจ logic R2 และ browser ทั้งชุด หรือ `npm test` เพื่อตรวจ logic ทั้งเดิมและ R2 ดู [ผลตรวจและ coverage ทั้ง 20 AT](docs/r2-validation.md)
 
-ผลล่าสุด: logic 45 tests ผ่าน, browser 23 tests ผ่าน, TypeScript และ production build ผ่าน ตรวจภาพ desktop/มือถือแล้ว
+ชุดตรวจปัจจุบันมี logic 58 tests และ browser 25 tests รวมการป้องกัน staging; ดูผล TypeScript, tests และ production build ของแต่ละ commit ใน GitHub Actions ผลตรวจ R2 เดิมมี logic 45 tests และ browser 23 tests
 
 วันทบทวนใช้ PostgreSQL และคีย์คลังภายในที่มีอยู่ ไม่มี UI ให้เลือกคลังและไม่มีการเพิ่มความสามารถหลายคลัง ฐานพัฒนา local เดิมยังเก็บไว้ ส่วนชุด Docker ใหม่ใช้ฐานและ volume แยก ผ่านการตรวจบันทึกวันข้ามการสร้าง containers ใหม่แล้ว ไม่ได้ล้างฐานพัฒนาหรือเชื่อม DBF
 
