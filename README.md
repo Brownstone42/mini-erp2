@@ -6,7 +6,9 @@
 
 สำรองฐาน staging จริงและกู้ลง PostgreSQL แยกใน Docker ผ่านแล้ว ข้อมูลวันทบทวนและประวัติ migration ตรงกัน ดู [คู่มือและผล backup/restore](docs/backup-restore.md) ไฟล์สำรองกับโฟลเดอร์ secret ไม่เข้า Git หรือ Docker build
 
-รุ่นหลังซ้อมนำข้อความ “รุ่นทดลอง B” ออกแล้ว ขั้นถัดไปคือให้ CI ผ่านและผู้ใช้ deploy commit นี้ด้วยตนเองบน Render เพื่อให้ตรงกับ GitHub ไม่ต้องรัน migration เพิ่มหรือแก้ Environment Variables และคง Auto-Deploy เป็น Off
+ผู้ใช้ตรวจหน้าจอหลัง deploy แล้ว ไม่มีข้อความ “รุ่นทดลอง B” และวันทบทวนยังเป็น 26 พ.ย. 2026 โดยยังไม่ได้ตรวจ live commit SHA โดยตรง คง Auto-Deploy เป็น Off
+
+ตั้ง UptimeRobot ตรวจ `/api/health` ทุก 5 นาทีแล้ว ผู้ใช้ได้รับอีเมลทดสอบ และหน้า Render Recovery แสดงช่วงกู้คืนย้อนหลัง 3 วัน ดู [คู่มือดูแล staging](docs/staging-operations.md) สำหรับการรับมือ alert, rollback และตารางสำรอง/ซ้อมกู้คืนแบบทำเอง ยังไม่ได้ตั้งสำรองอัตโนมัติหรือซ้อม PITR บน Render
 
 ## CI
 
@@ -466,6 +468,8 @@ Red: browser tests ใหม่ทั้ง 4 ข้อล้มเหลวเ�
 
 ## เอกสาร
 
+- [รายการตรวจ Express ก่อนอ่านข้อมูลจริง](docs/express-verification-plan.md)
+- [คู่มือดูแล staging](docs/staging-operations.md)
 - [Requirement](docs/requirements.md)
 - [Acceptance tests](docs/acceptance-tests.md)
 - [Tech stack](docs/tech-stack.md)
